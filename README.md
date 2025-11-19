@@ -35,7 +35,6 @@ pnpm format
 
 The application will be available at `http://localhost:5173/`
 
-## 📋 Requirements Met
 
 ### Core Features ✅
 - ✅ Load venue data from `public/venue.json` and render all seats
@@ -56,6 +55,22 @@ The application will be available at `http://localhost:5173/`
 - ✅ Vite build tool
 - ✅ ESLint and Prettier configured
 - ✅ Clean, modular code structure
+
+### Technology Choices
+
+#### **Vite + React** (vs Next.js)
+- **Why**: Faster dev server with ESBuild, simpler configuration for SPA
+- **Trade-off**: No SSR (not needed for this use case)
+
+#### **SVG Rendering** (vs Canvas)
+- **Why**: Better accessibility (DOM elements), easier event handling, scalable graphics
+- **Trade-off**: Performance can degrade with 15k+ elements
+- **Mitigation**: React.memo, event delegation, viewport culling ready
+
+#### **Context + useReducer** (vs Redux)
+- **Why**: Built-in, simpler for this scope, no extra bundle size
+- **Trade-off**: No DevTools
+- **Mitigation**: Sufficient for single-page app with limited state
 
 
 ### Project Structure
