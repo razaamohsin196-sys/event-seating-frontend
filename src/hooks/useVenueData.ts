@@ -11,7 +11,7 @@ interface UseVenueDataReturn {
 /**
  * Custom hook to load venue data
  */
-export function useVenueData(): UseVenueDataReturn {
+export function useVenueData(venueFile?: string): UseVenueDataReturn {
   const [venue, setVenue] = useState<Venue | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -22,7 +22,7 @@ export function useVenueData(): UseVenueDataReturn {
     const loadVenue = async () => {
       try {
         setLoading(true);
-        const data = await fetchVenueData();
+        const data = await fetchVenueData(venueFile);
         
         if (isMounted) {
           setVenue(data);
@@ -45,7 +45,7 @@ export function useVenueData(): UseVenueDataReturn {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [venueFile]);
 
   return { venue, loading, error };
 }

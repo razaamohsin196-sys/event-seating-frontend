@@ -43,6 +43,35 @@ export function useViewportCulling({
     }, 0);
   }, [sections]);
 
+  // Update initial viewport when sections are loaded for better culling
+  useEffect(() => {
+    if (sections.length === 0) return;
+
+    // Only update for large venues to avoid disturbing small venue behavior
+    if (totalSeats > 1000) {
+      // For large venues with grid layout, show the first few complete sections
+      // instead of trying to fit all seats in initial view
+
+      // Calculate section bounds (sections are arranged in a grid)
+      const sectionWidth = 890; // From generation script: sectionCol * 890
+      const sectionHeight = 750; // From generation script: sectionRow * 750
+
+      // Show first 2 sections horizontally and 2 vertically with some padding
+      const sectionsToShowX = Math.min(2, Math.ceil(Math.sqrt(sections.length)));
+      const sectionsToShowY = Math.min(2, Math.ceil(sections.length / sectionsToShowX));
+
+      const viewportWidth = sectionsToShowX * sectionWidth + 100; // 100px padding
+      const viewportHeight = sectionsToShowY * sectionHeight + 100; // 100px padding
+
+      setViewBox({
+        x: 0,
+        y: 0,
+        width: Math.min(mapWidth, viewportWidth),
+        height: Math.min(mapHeight, viewportHeight),
+      });
+    }
+  }, [sections, mapWidth, mapHeight, totalSeats]);
+
   const visibleSeats = useMemo(() => {
     const seatMap = new Map<string, Seat[]>();
 

@@ -8,6 +8,7 @@ export interface SeatingState {
   loading: boolean;
   error: Error | null;
   heatMapEnabled: boolean; // Heat map visualization toggle
+  venueFile: string; // Current venue file being loaded
 }
 
 export type SeatingAction =
@@ -20,7 +21,8 @@ export type SeatingAction =
   | { type: 'CLEAR_SELECTION' }
   | { type: 'LOAD_SELECTION'; payload: Seat[] }
   | { type: 'SET_FOCUSED_SEAT'; payload: string | null }
-  | { type: 'TOGGLE_HEAT_MAP' }; // Toggle heat map visualization
+  | { type: 'TOGGLE_HEAT_MAP' } // Toggle heat map visualization
+  | { type: 'SET_VENUE_FILE'; payload: string }; // Switch venue file
 
 export interface SeatingContextValue {
   state: SeatingState;
@@ -32,4 +34,5 @@ export interface SeatingContextValue {
   isSeatSelected: (seatId: string) => boolean;
   canSelectMoreSeats: boolean;
   toggleHeatMap: () => void; // Toggle heat map function
+  switchVenueFile: (venueFile: string) => void; // Switch venue file function
 }

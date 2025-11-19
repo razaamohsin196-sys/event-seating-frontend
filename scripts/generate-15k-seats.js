@@ -27,8 +27,8 @@ function generateVenue() {
       id: sectionId,
       label: `Section ${sectionId}`,
       transform: {
-        x: sectionCol * 950,
-        y: sectionRow * 800,
+        x: sectionCol * 890, // Reduced from 950 to eliminate gaps
+        y: sectionRow * 750, // Reduced from 800 to eliminate vertical gaps
         scale: 1
       },
       rows: []
@@ -82,8 +82,8 @@ function generateVenue() {
     venueId: "mega-arena-01",
     name: "Mega Arena (15,000 Seats)",
     map: {
-      width: 5000,
-      height: 3400
+      width: 4500, // Reduced to match tighter section spacing
+      height: 3100
     },
     sections: sections
   };

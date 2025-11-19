@@ -74,6 +74,7 @@ export function seatingReducer(state: SeatingState, action: SeatingAction): Seat
       return {
         ...state,
         selectedSeats: [],
+        focusedSeatId: null, // Also clear focused seat when clearing all
       };
 
     case 'LOAD_SELECTION': {
@@ -89,6 +90,16 @@ export function seatingReducer(state: SeatingState, action: SeatingAction): Seat
       return {
         ...state,
         focusedSeatId: action.payload,
+      };
+
+    case 'SET_VENUE_FILE':
+      return {
+        ...state,
+        venueFile: action.payload,
+        selectedSeats: [], // Clear selection when switching venues
+        focusedSeatId: null,
+        loading: true,
+        error: null,
       };
 
     default:

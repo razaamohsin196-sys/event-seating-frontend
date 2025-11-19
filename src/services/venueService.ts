@@ -1,9 +1,9 @@
 import { Venue } from '@/types/venue';
 
-export const fetchVenueData = async (): Promise<Venue> => {
+export const fetchVenueData = async (venueFile: string = 'venue.json'): Promise<Venue> => {
   try {
-  
-    const response = await fetch('/venue.json');
+
+    const response = await fetch(`/${venueFile}`);
     
     if (!response.ok) {
       throw new Error(`Failed to fetch venue data: ${response.statusText}`);

@@ -13,6 +13,7 @@ const initialState: SeatingState = {
   loading: true,
   error: null,
   heatMapEnabled: false,
+  venueFile: 'venue.json',
 };
 
 
@@ -24,7 +25,7 @@ interface SeatingProviderProps {
 
 export function SeatingProvider({ children }: SeatingProviderProps) {
   const [state, dispatch] = useReducer(seatingReducer, initialState);
-  const { venue, loading, error } = useVenueData();
+  const { venue, loading, error } = useVenueData(state.venueFile);
 
   useEffect(() => {
     if (venue) {
@@ -80,6 +81,10 @@ export function SeatingProvider({ children }: SeatingProviderProps) {
     dispatch({ type: 'TOGGLE_HEAT_MAP' });
   }, []);
 
+  const switchVenueFile = useCallback((venueFile: string) => {
+    dispatch({ type: 'SET_VENUE_FILE', payload: venueFile });
+  }, []);
+
   const value: SeatingContextValue = useMemo(() => ({
     state,
     dispatch,
@@ -90,7 +95,8 @@ export function SeatingProvider({ children }: SeatingProviderProps) {
     isSeatSelected,
     canSelectMoreSeats,
     toggleHeatMap,
-  }), [state, selectSeat, deselectSeat, clearSelection, toggleSeatSelection, isSeatSelected, canSelectMoreSeats, toggleHeatMap]);
+    switchVenueFile,
+  }), [state, selectSeat, deselectSeat, clearSelection, toggleSeatSelection, isSeatSelected, canSelectMoreSeats, toggleHeatMap, switchVenueFile]);
 
   return <SeatingContext.Provider value={value}>{children}</SeatingContext.Provider>;
 }
